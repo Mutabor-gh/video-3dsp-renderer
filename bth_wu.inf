@@ -1,0 +1,35 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=USB
+ClassGuid={36fc9e60-c465-11cf-8056-444553540000}
+Provider=%ProviderName%
+DriverVer=03/03/2019,3.3.3.0
+
+[Manufacturer]
+%ProviderName% = Bluetooth, NTx86, NTamd64
+
+[Bluetooth.NTx86]
+%DeviceName%     = BtUsb.Install, USB\Class_E0&SubClass_01&Prot_01
+
+[Bluetooth.NTamd64]
+%DeviceName%     = BtUsb.Install, USB\Class_E0&SubClass_01&Prot_01
+
+[BtUsb.Install.nt]
+Include = winusb.inf
+Needs   = WINUSB.NT
+
+[BtUsb.Install.nt.Services]
+Include     = winusb.inf
+AddService  = WinUSB,0x00000002,WinUSB_ServiceInstall
+
+[WinUSB_ServiceInstall]
+DisplayName     = %WinUSB_SvcDesc%
+ServiceType     = 1
+StartType       = 3
+ErrorControl    = 1
+ServiceBinary   = %12%\WinUSB.sys
+
+[Strings]
+ProviderName    = "Bluetooth"
+DeviceName      = "HCI WinUSB Bluetooth Adapter"
+WinUSB_SvcDesc  = "WinUSB USB Driver"
